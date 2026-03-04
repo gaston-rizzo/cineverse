@@ -29,6 +29,10 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate'
 // Plugin de Vue Query para manejo de fetch, cache y estado asíncrono
 import { VueQueryPlugin } from '@tanstack/vue-query'
+// Importamos tailwind
+import './assets/main.css'
+// Importamos la librería de internacionalización (vue-i18n)
+import i18n from './i18n'
 
 // Creamos la instancia de Pinia
 const pinia = createPinia()
@@ -45,5 +49,7 @@ createApp(App)
   .use(router)
   // Registramos Vue Query para manejo avanzado de requests y cache
   .use(VueQueryPlugin)
+  // Registramos el plugin vue-i18n para habilitar traducciones globales
+  .use(i18n)
   // Montamos la aplicación en el div con id="app" del index.html
   .mount('#app')

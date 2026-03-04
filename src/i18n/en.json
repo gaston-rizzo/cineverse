@@ -1,0 +1,13 @@
+
+{
+  "nav": {
+    "home": "Home",
+    "movies": "Movies"
+  },
+  "home": {
+    "title": "Discover the Best Cinema Experience"
+  },
+  "movies": {
+    "title": "Popular Movies"
+  }
+}

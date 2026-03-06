@@ -1,5 +1,4 @@
-
-/**
+/*
  * Representa el conjunto base de filtros que se pueden aplicar
  * al buscar o descubrir películas desde el frontend.
  *

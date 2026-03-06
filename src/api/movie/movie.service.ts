@@ -23,6 +23,11 @@
  *    - Primero busca por texto usando /search/movie.
  *    - Luego aplica manualmente los filtros (géneros, rango de años, rating) en frontend.
  * 
+ * 4. getMovieGenres(language)
+ *    - Obtiene la lista de géneros de películas desde TMDB.
+ *    - Usa el endpoint /genre/movie/list.
+ *    - Se utiliza para poblar los filtros de género en la interfaz.
+ * 
  * Tipos utilizados:
  * - Movie: estructura de cada película
  * - PaginatedResponse<Movie>: estructura paginada que devuelve TMDB
@@ -40,9 +45,10 @@ import api from '../apiAxios'
 // Interfaces locales solo para TS, no se importan en JS runtime
 // Se usan únicamente para tipado y autocompletado
 import type { Movie } from '@/types/movie'
-import type { PaginatedResponse } from '@/types/paginated'
+import type { PaginatedResponse } from '@/types/paginatedResponse'
 import type { DiscoverFilters } from '@/types/discover-filters'
-import type { SearchWithFilters } from '@/types/search-with-filters'
+import type { SearchWithTextAndFilters } from '@/types/search-with-text-filters'
+import type { Genre } from '@/types/genre'
 
 /* ================================================================================
  * Función que busca películas sólo por texto usando el endpoint /search/movie
@@ -149,7 +155,7 @@ export const searchByFilters = async (
 export const searchByTextAndFilters = async (
   page: number,
   language: string,
-  filters: SearchWithFilters
+  filters: SearchWithTextAndFilters
 ): Promise<PaginatedResponse<Movie>> => {
 
     // 1. Se busca la película que coincide con el texto ingresado
@@ -281,4 +287,35 @@ export const searchByTextAndFilters = async (
     total_results: results.length
   }
   
+}
+
+/* ================================================================================
+ * Función que obtiene la lista de géneros de películas desde TMDB
+ *
+ * Este endpoint devuelve todos los géneros disponibles para películas.
+ * 
+ * Ejemplo de respuesta:
+ *
+ * [
+ *   { id: 28, name: "Action" },
+ *   { id: 35, name: "Comedy" },
+ *   { id: 18, name: "Drama" }
+ * ]
+ *
+ * Parámetros:
+ * - language → idioma en el que TMDB devolverá el nombre del género
+ *              (ej: "en-US", "es-ES")
+ *
+ * Nota:
+ * La función devuelve directamente el array de géneros,
+ * no la respuesta completa de TMDB.
+ * ================================================================================ */
+export const getMovieGenres = 
+  async (language: string) : Promise<Genre[]> => {
+
+  const { data } = await api.get("/genre/movie/list", {
+    params: { language }
+  })
+
+  return data.genres
 }

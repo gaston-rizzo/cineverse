@@ -1,5 +1,4 @@
-
-/**
+/*
  * Representa una película tal como la devuelve TMDB.
  * 
  * Contiene la información principal que usamos en la aplicación:

@@ -1,5 +1,4 @@
-
-/**
+/*
  * Representa la estructura de respuesta paginada de la API de películas.
  * Usada tanto en /search/movie como en /discover/movie.
  * 

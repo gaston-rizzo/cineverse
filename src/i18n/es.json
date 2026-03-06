@@ -1,4 +1,3 @@
-
 {
   "nav": {
     "home": "Inicio",
@@ -9,5 +8,24 @@
   },
   "movies": {
     "title": "Películas Populares"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error al cargar"
+  },
+  "filters": {
+    "search": "Buscar",
+    "searchPlaceholder": "Escribí mínimo 3 caracteres",
+    "from" : "Desde",
+    "to" : "Hasta",   
+    "rating": "Calificación",
+    "sortBy": "Ordenar",
+    "sortOptions": {
+        "none": "Sin ordenar",
+        "mostPopular": "Más populares",
+        "mostRecent": "Más recientes",
+        "oldest": "Más antiguos",
+        "bestRating": "Mejor rating"
+      }
   }
 }

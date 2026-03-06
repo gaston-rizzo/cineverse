@@ -1,4 +1,3 @@
-
 {
   "nav": {
     "home": "Home",
@@ -9,5 +8,24 @@
   },
   "movies": {
     "title": "Popular Movies"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error loading"
+  },
+  "filters": {
+    "search": "Search",
+    "searchPlaceholder": "Type at least 3 characters",
+    "from": "From",
+    "to": "To",
+    "rating": "Rating",
+    "sortBy": "Sort by",
+    "sortOptions": {
+      "none": "No sorting",
+      "mostPopular": "Most popular",
+      "mostRecent": "Most recent",
+      "oldest": "Oldest",
+      "bestRating": "Best rating"
+    }
   }
 }

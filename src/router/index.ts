@@ -23,7 +23,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // Importamos las vistas (pages) principales de la aplicación
 import HomeView from '../views/HomeView.vue'
-import MoviesListView from '../views/MoviesListView.vue'
+import MoviesView from '@/views/MoviesView.vue'
 
 // Importamos la instancia de i18n para sincronizar idioma con la ruta
 import i18n from '../i18n'
@@ -72,7 +72,7 @@ const router = createRouter({
     {
       path: '/:lang(en|es)/movies',
       name: 'Movies',
-      component: MoviesListView
+      component: MoviesView
     }    
 ]
 })
@@ -106,25 +106,24 @@ const router = createRouter({
 // Guard global que se ejecuta antes de cada navegación
 // un guard global es una función que se ejecuta antes
 //  o después de una navegación.
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to) => {
 
-  // Obtenemos el parámetro dinámico :lang desde la URL
-  // Ej: /en/movies → lang = "en"
-  //     /es        → lang = "es"
-  const lang = to.params.lang
+    // Obtenemos el parámetro dinámico :lang desde la URL
+    // Ej: /en/movies → lang = "en"
+    //     /es        → lang = "es"
+    const lang = to.params.lang as string
 
-  // Verificamos que el idioma sea válido
-  // (solo aceptamos "en" o "es")
-  if (lang === 'en' || lang === 'es') {
+    // Verificamos que el idioma sea válido
+    // (solo aceptamos "en" o "es")
+    if (lang === 'en' || lang === 'es') {
+      // Actualizamos el idioma global de vue-i18n
+      // para que toda la app cambie automáticamente
+      i18n.global.locale.value = lang
+    }
 
-    // Actualizamos el idioma global de vue-i18n
-    // para que toda la app cambie automáticamente
-    i18n.global.locale.value = lang
-  }
+    // permite la navegación
+    return true;
 
-  // Permitimos que la navegación continúe
-  // Si no llamamos next(), la ruta queda bloqueada
-  next()
 })
 
 // Exportamos el router para usarlo en main.ts

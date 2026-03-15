@@ -13,18 +13,16 @@
  */
 
 export interface BaseFilters {
-
-    /* Array de IDs de géneros para filtrar. Ej: [28, 12] para Acción y Aventura */
-    genres?: number[]
-    /* Año mínimo de estreno (desde). Filtra películas estrenadas a partir de este año */
-    yearFrom?: number
-    /* Año máximo de estreno (hasta). Filtra películas estrenadas hasta este año */
-    yearTo?: number
-    /* Calificación mínima (vote_average) para filtrar */
-    minRating?: number
-    /* Calificación máxima (vote_average) para filtrar */
-    maxRating?: number
-    /* Ordenamiento de los resultados. Ej: 'popularity.desc', 'release_date.asc' */
-    sortBy?: string
-
+  /* Array de IDs de géneros para filtrar. Ej: [28, 12] para Acción y Aventura */
+  genres?: number[];
+  /* Año mínimo de estreno (desde). Filtra películas estrenadas a partir de este año */
+  yearFrom?: number;
+  /* Año máximo de estreno (hasta). Filtra películas estrenadas hasta este año */
+  yearTo?: number;
+  /* Calificación mínima (vote_average) para filtrar */
+  minRating?: number;
+  /* Calificación máxima (vote_average) para filtrar */
+  maxRating?: number;
+  /* Ordenamiento de los resultados. Ej: 'popularity.desc', 'release_date.asc' */
+  sortBy?: string;
 }

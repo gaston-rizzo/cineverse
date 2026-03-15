@@ -1,35 +1,35 @@
-
 /*
  * =================================
- * Configuración de rutas  
+ * Configuración de rutas
  * =================================
- * 
- * Este archivo define la configuración central de navegación 
+ *
+ * Este archivo define la configuración central de navegación
  * de la aplicación utilizando Vue Router.
  *
  * Responsabilidades:
- * 
+ *
  * - Declarar las rutas principales (views)
  * - Configurar el modo history (sin hash)
  * - Manejar redirecciones iniciales
  * - Validar parámetros dinámicos (ej: idioma :lang)
  *
- * Actúa como el sistema de navegación de la SPA, conectando 
+ * Actúa como el sistema de navegación de la SPA, conectando
  * las URLs con sus respectivas vistas.
  */
 
 // Importamos las funciones necesarias de Vue Router
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
 // Importamos las vistas (pages) principales de la aplicación
-import HomeView from '../views/HomeView.vue'
-import MoviesView from '@/views/MoviesView.vue'
+import HomeView from "../views/HomeView.vue";
+import MoviesView from "@/views/MoviesView.vue";
+import UpcomingView from "@/views/UpcomingView.vue";
+import FavoritesView from "@/views/FavoritesView.vue";
 
 // Importamos la instancia de i18n para sincronizar idioma con la ruta
-import i18n from '../i18n'
+import i18n from "../i18n";
 
 const router = createRouter({
-
   // Usamos history mode sin hash (#)
   // de esta forma se puede usar /en/movies
   // import.meta.env.BASE_URL permite que funcione correctamente
@@ -37,45 +37,55 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   // Rutas de la aplicación
   routes: [
-
-    // Detecta idioma del navegador, si es español 
-    // traduce el sitio a español, sino a ingles    
+    // Detecta idioma del navegador, si es español
+    // traduce el sitio a español, sino a ingles
     // Solo se ejecuta cuando se ingresa a "/"
     // No afecta navegación interna
     {
-      path: '/',
+      path: "/",
       redirect: () => {
-
         // Detecta idioma del navegador (ej: es-AR, en-US)
-        const browserLang = navigator.language.toLowerCase()
+        const browserLang = navigator.language.toLowerCase();
 
         // Si empieza con "es" → va a español
-        if (browserLang.startsWith('es')) {
-          return '/es'
+        if (browserLang.startsWith("es")) {
+          return "/es";
         }
 
         // En cualquier otro caso → inglés
-        return '/en'
-      }
+        return "/en";
+      },
     },
 
     // Ruta para Home por idioma
     // Valida que :lang sea solo 'en' o 'es'
     // Evita rutas inválidas como: /asdf/movies
     {
-      path: '/:lang(en|es)',
-      name: 'Home',
-      component: HomeView
+      path: "/:lang(en|es)",
+      name: "Home",
+      component: HomeView,
     },
 
     // Ruta para el listado de películas
     {
-      path: '/:lang(en|es)/movies',
-      name: 'Movies',
-      component: MoviesView
-    }    
-]
-})
+      path: "/:lang(en|es)/movies",
+      name: "Movies",
+      component: MoviesView,
+    },
+
+    {
+      path: "/:lang(en|es)/upcoming",
+      name: "Upcoming",
+      component: UpcomingView,
+    },
+
+    {
+      path: "/:lang(en|es)/favorites",
+      name: "Favorites",
+      component: FavoritesView,
+    },
+  ],
+});
 
 // ==========================================
 // Sincronización automática Router ↔ i18n
@@ -107,24 +117,22 @@ const router = createRouter({
 // un guard global es una función que se ejecuta antes
 //  o después de una navegación.
 router.beforeEach((to) => {
+  // Obtenemos el parámetro dinámico :lang desde la URL
+  // Ej: /en/movies → lang = "en"
+  //     /es        → lang = "es"
+  const lang = to.params.lang as string;
 
-    // Obtenemos el parámetro dinámico :lang desde la URL
-    // Ej: /en/movies → lang = "en"
-    //     /es        → lang = "es"
-    const lang = to.params.lang as string
+  // Verificamos que el idioma sea válido
+  // (solo aceptamos "en" o "es")
+  if (lang === "en" || lang === "es") {
+    // Actualizamos el idioma global de vue-i18n
+    // para que toda la app cambie automáticamente
+    i18n.global.locale.value = lang;
+  }
 
-    // Verificamos que el idioma sea válido
-    // (solo aceptamos "en" o "es")
-    if (lang === 'en' || lang === 'es') {
-      // Actualizamos el idioma global de vue-i18n
-      // para que toda la app cambie automáticamente
-      i18n.global.locale.value = lang
-    }
-
-    // permite la navegación
-    return true;
-
-})
+  // permite la navegación
+  return true;
+});
 
 // Exportamos el router para usarlo en main.ts
-export default router
+export default router;

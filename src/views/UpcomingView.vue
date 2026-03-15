@@ -2,5 +2,9 @@
 </script>
 
 <template>
-  <h2>Home View</h2>
+
+    <h2>
+        Upcoming View
+    </h2>
+
 </template>

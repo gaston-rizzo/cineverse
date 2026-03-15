@@ -1,7 +1,12 @@
 {
   "nav": {
     "home": "Inicio",
-    "movies": "Películas"
+    "movies": "Películas",
+    "upcoming": "Estrenos",
+    "favorites": "Favoritos"
+  },
+  "header": {
+    "searchPlaceholder": "Buscar una película"
   },
   "home": {
     "title": "Descubrí la mejor experiencia de cine"
@@ -10,22 +15,44 @@
     "title": "Películas Populares"
   },
   "common": {
-    "loading": "Cargando...",
-    "error": "Error al cargar"
+    "searchingMovies": "Buscando películas...",
+    "errorTitle": "No pudimos cargar las películas.",
+    "errorMessage": "Intentá nuevamente en unos segundos.",
+    "emptyResultsTitle": "No encontramos películas",
+    "emptyResultsLine1": "Los filtros actuales no devolvieron resultados.",
+    "emptyResultsLine2": "Prueba ampliarlos o reiniciarlos."
   },
   "filters": {
+    "header": {
+      "customizePanels": "Personalizar paneles",
+      "saveOrder": "Guardar orden"
+    },
+    "panels": {
+      "list": "Listado",
+      "filters": "Filtros",
+      "genres": "Géneros",
+      "sort": "Ordenar"
+    },
+    "typesOptions": {
+      "discover": "Descubrir",
+      "popular": "Populares",
+      "now_playing": "En cartelera",
+      "upcoming": "Próximamente",
+      "top_rated": "Mejor valoradas"
+    },
     "search": "Buscar",
     "searchPlaceholder": "Escribí mínimo 3 caracteres",
-    "from" : "Desde",
-    "to" : "Hasta",   
+    "from": "Desde",
+    "to": "Hasta",
+    "years": "Años",
     "rating": "Calificación",
     "sortBy": "Ordenar",
     "sortOptions": {
-        "none": "Sin ordenar",
-        "mostPopular": "Más populares",
-        "mostRecent": "Más recientes",
-        "oldest": "Más antiguos",
-        "bestRating": "Mejor rating"
-      }
+      "none": "Sin ordenar",
+      "mostPopular": "Más populares",
+      "mostRecent": "Más recientes",
+      "oldest": "Más antiguos",
+      "bestRating": "Mejor rating"
+    }
   }
 }

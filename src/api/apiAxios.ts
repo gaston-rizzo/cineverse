@@ -1,4 +1,3 @@
-
 /**
  * Este archivo configura y exporta una instancia de Axios personalizada
  * para consumir la API de TMDB (The Movie Database).
@@ -12,7 +11,7 @@
  * para realizar todas las llamadas HTTP a TMDB de manera consistente.
  */
 
-import axios from 'axios'
+import axios from "axios";
 
 // Base URL de la API de TMDB tomada de las variables de entorno
 const baseURL = import.meta.env.VITE_TMDB_BASE_URL;
@@ -26,9 +25,9 @@ const api = axios.create({
   baseURL: baseURL, // URL base de todas las peticiones
   headers: {
     Authorization: `Bearer ${token}`, // Autenticación con Bearer Token
-    'Content-Type': 'application/json' // Tipo de contenido enviado y recibido
-  }
-})
+    "Content-Type": "application/json", // Tipo de contenido enviado y recibido
+  },
+});
 
 // Exportamos la instancia para usarla en otros módulos
-export default api
+export default api;

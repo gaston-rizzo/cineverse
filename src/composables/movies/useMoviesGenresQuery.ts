@@ -15,10 +15,10 @@
  * const { data, isLoading, isError } = useMovieGenres(language)
  */
 
-import type { Ref } from "vue"
-import { useQuery } from "@tanstack/vue-query"
-import { getMovieGenres } from "@/api/movie/movie.service"
-import type { Genre } from "@/types/genre"
+import type { Ref } from "vue";
+import { useQuery } from "@tanstack/vue-query";
+import { getMovieGenres } from "@/api/movies/movies.service";
+import type { Genre } from "@/types/genre";
 
 /**
  * Clave base de Vue Query para la consulta de géneros de películas.
@@ -31,13 +31,11 @@ import type { Genre } from "@/types/genre"
  * El idioma se agrega dinámicamente al queryKey para que
  * cada idioma tenga su propio cache de géneros.
  */
-const MOVIE_GENRES_QUERY_KEY = "movieGenres"
+const MOVIE_GENRES_QUERY_KEY = "movieGenres";
 
-export function useMovieGenres(language: Ref<string>) {
-
+export function useMovieGenresQuery(language: Ref<string>) {
   // useQuery tipa la propiedad `data` como Genre[]
   return useQuery<Genre[]>({
-
     // Clave de cache de la query.
     // Si el idioma cambia se vuelven a obtener los generos
     queryKey: [MOVIE_GENRES_QUERY_KEY, language],
@@ -46,8 +44,6 @@ export function useMovieGenres(language: Ref<string>) {
     queryFn: () => getMovieGenres(language.value),
 
     // Mantener cache mucho tiempo
-    gcTime: 1000 * 60 * 60 * 24
-
-  })
-
+    gcTime: 1000 * 60 * 60 * 24,
+  });
 }

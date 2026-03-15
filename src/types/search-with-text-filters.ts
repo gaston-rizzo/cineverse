@@ -8,7 +8,6 @@
 import type { BaseFilters } from "./base-filter";
 
 export interface SearchWithTextAndFilters extends BaseFilters {
-
-    /** Texto que ingresa el usuario para buscar películas (obligatorio) */
-    query: string
+  /** Texto que ingresa el usuario para buscar películas (obligatorio) */
+  query: string;
 }

@@ -2,10 +2,8 @@
  * Representa una genero de TMDB.
  */
 export interface Genre {
-
-    // Id de genero
-    id: number,
-    // Nombre del genero
-    name : string
-
+  // Id de genero
+  id: number;
+  // Nombre del genero
+  name: string;
 }

@@ -27,27 +27,32 @@
  * }
  */
 
-import { computed } from "vue"
-import type { Ref } from "vue"
-import { useQuery } from "@tanstack/vue-query"
+import { computed } from "vue";
+import type { Ref } from "vue";
+import { useQuery } from "@tanstack/vue-query";
 
-import type { PaginatedResponse } from "@/types/paginatedResponse"
-import type { Movie } from "@/types/movie"
+import type { PaginatedResponse } from "@/types/paginated-response";
+import type { Movie } from "@/types/movie";
+
+import { getMovieList } from "@/api/movies/movies.service";
+import type { MovieListType } from "@/types/movie-list-type";
 
 import {
   searchByText,
   searchByFilters,
-  searchByTextAndFilters
-} from "@/api/movie/movie.service"
+  searchByTextAndFilters,
+} from "@/api/movies/movies.service";
 
-export function useMoviesQuery(filters: any, language: Ref<string>) {
+import { useMoviesFilters } from "./useMoviesFilters";
 
+export type MovieFilters = ReturnType<typeof useMoviesFilters>;
+
+export function useMoviesQuery(filters: MovieFilters, language: Ref<string>) {
   /* useQuery: Sirve para pedir datos a la API y que la librería gestione todo automáticamente. */
   /* es el hook principal de @tanstack/vue-query. */
   /* La data que devuelve useQuery tiene la forma de PaginatedResponse<Movie> */
-  /* es decir, useQuery va a devolver datos de tipo PaginatedResponse<Movie>. */  
+  /* es decir, useQuery va a devolver datos de tipo PaginatedResponse<Movie>. */
   return useQuery<PaginatedResponse<Movie>>({
-
     /**
      * queryKey define la identidad de la query en Vue Query.
      *
@@ -55,27 +60,36 @@ export function useMoviesQuery(filters: any, language: Ref<string>) {
      * Vue Query vuelve a ejecutar automáticamente la query.
      */
     queryKey: computed(() => [
-
-      "movies",
       // Query base generada por el composable de filtros
       ...filters.queryKey.value,
+      // listType se agrega porque define qué endpoint de TMDB se va a usar.
+      // Si cambia (por ejemplo discover → popular),
+      // Vue Query debe considerar que es una query distinta
+      // y volver a ejecutar la request.
+      filters.listType.value,
       // El idioma forma parte de la query
       // porque la API devuelve resultados distintos según el language
-      language
-
+      language.value,
     ]),
 
     /**
      * enabled controla cuándo la query puede ejecutarse.
-     *
-     * Evitamos hacer requests innecesarios cuando
-     * no hay texto ni filtros activos.
      */
-    enabled: computed(() =>
+    enabled: computed(
+      () =>
+        // La query debe ejecutarse cuando:
 
-      filters.hasText.value ||
-      filters.hasFilters.value
-
+        // - el usuario selecciona una lista distinta de "discover"
+        // - hay texto de búsqueda
+        // - hay filtros activos
+        // - o simplemente cuando estamos en "discover" como ocurre cuando iniciamos la pagina
+        //
+        // Nota: esta condición actualmente siempre evalúa true,
+        // por lo que la query nunca queda deshabilitada.
+        filters.listType.value !== "discover" ||
+        filters.hasText.value ||
+        filters.hasFilters.value ||
+        filters.listType.value === "discover",
     ),
 
     /**
@@ -85,16 +99,26 @@ export function useMoviesQuery(filters: any, language: Ref<string>) {
      * Promise<PaginatedResponse<Movie>>
      */
     queryFn: () => {
+      // Página inicial
+      const page = 1;
 
-      // Página inicial (luego podrías hacerlo dinámico)
-      const page = 1
-
+      // Se detiene la query cuando el usuario está escribiendo menos de 3 letras.
+      // if (filters.txtMovie.value.trim().length > 0 &&
+      //     filters.txtMovie.value.trim().length < 3
+      // ) {
+      //   return Promise.resolve({
+      //     page: 1,
+      //     results: [],
+      //     total_pages: 0,
+      //     total_results: 0,
+      //   });
+      // }
+        
       /**
        * Normalizamos las opciones de filtros para evitar
        * repetir el mismo objeto en múltiples llamadas.
        */
       const filterOptions = {
-
         genres: filters.selectedGenres.value,
 
         // Si no existe valor se envía undefined
@@ -105,8 +129,20 @@ export function useMoviesQuery(filters: any, language: Ref<string>) {
         minRating: filters.minRating.value,
         maxRating: filters.maxRating.value,
 
-        sortBy: filters.sortBy.value ?? undefined
+        sortBy: filters.sortBy.value ?? "release_date.desc",
+        // sortBy: filters.sortBy.value ?? undefined
+      };
 
+      /**
+       * Caso 0
+       * Listados predefinidos
+       */
+      if (filters.listType.value !== "discover") {
+        return getMovieList(
+          filters.listType.value as MovieListType,
+          page,
+          language.value,
+        );
       }
 
       /**
@@ -114,17 +150,11 @@ export function useMoviesQuery(filters: any, language: Ref<string>) {
        * Texto + filtros
        */
       if (filters.hasText.value && filters.hasFilters.value) {
-
-        return searchByTextAndFilters(
-          page,
-          language.value,
-          {
-            query: filters.debouncedQuery.value,
-            // crea un objeto con query y después agrega todas las propiedades que tenga filterOptions
-            ...filterOptions
-          }
-        )
-
+        return searchByTextAndFilters(page, language.value, {
+          query: filters.debouncedQuery.value,
+          // crea un objeto con query y después agrega todas las propiedades que tenga filterOptions
+          ...filterOptions,
+        });
       }
 
       /**
@@ -132,27 +162,14 @@ export function useMoviesQuery(filters: any, language: Ref<string>) {
        * Solo texto
        */
       if (filters.hasText.value) {
-
-        return searchByText(
-          filters.debouncedQuery.value,
-          page,
-          language.value
-        )
-
+        return searchByText(filters.debouncedQuery.value, page, language.value);
       }
 
       /**
        * Caso 3
        * Solo filtros
        */
-      return searchByFilters(
-        page,
-        language.value,
-        filterOptions
-      )
-
-    }
-
-  })
-
+      return searchByFilters(page, language.value, filterOptions);
+    },
+  });
 }

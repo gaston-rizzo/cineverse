@@ -1,4 +1,3 @@
-
 /*
  * =================================
  * Configuración global del sitio   
@@ -15,21 +14,20 @@
  * incluso después de recargar la página (localStorage).
  */
 
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { defineStore } from "pinia";
+import { ref } from "vue";
 
 export const useAppStore = defineStore(
-  'app',
+  "app",
   () => {
-
     // CineVerse es dark-first, sin modo light
-    const theme = ref<'cinematic-dark'>('cinematic-dark')
+    const theme = ref<"cinematic-dark">("cinematic-dark");
 
     return {
-      theme
-    }
+      theme,
+    };
   },
   {
-    persist: true
-  }
-)
+    persist: true,
+  },
+);

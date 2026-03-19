@@ -6,9 +6,10 @@
 // - navegación
 // - buscador
 // - selector de idioma
-// Al colocarlo en App.vue se renderiza UNA sola vez y permanece
+// Al colocarlo en App.vue se renderiza una sola vez y permanece
 // visible en todas las páginas de la app.
-import AppHeader from './components/layout/AppHeader.vue';
+import AppHeader from './layouts/AppHeader.vue';
+import AppFooter from './layouts/AppFooter.vue';
 
 </script>
 
@@ -40,11 +41,11 @@ import AppHeader from './components/layout/AppHeader.vue';
     <RouterView />
   </div>
 
+  <AppFooter />
+
 </template>
 
 <style>
-
-
 
 body{
   overflow-x: hidden;
@@ -101,12 +102,10 @@ body{
      no al contenedor. Así cubre siempre toda la pantalla
      incluso cuando se hace scroll. */
   position:fixed;
-
   /* inset:0 es equivalente a:
      top:0; right:0; bottom:0; left:0;
      Hace que la capa ocupe todo el viewport. */
   inset:0;
-
   /* Evita que esta capa bloquee clicks o interacciones
      con los elementos reales de la página. */
   pointer-events:none;
@@ -129,8 +128,6 @@ body{
     /* zona central totalmente visible */
     transparent 18%,
     transparent 82%,
-
-
   );
 
   /* Se coloca debajo de la capa cinematográfica principal
@@ -361,6 +358,10 @@ z-index:1000;
   );
 }
 
+html {
+  overflow-anchor: none;
+}
+
 /* ==========================================================
    FIREFOX
    ========================================================== */
@@ -368,6 +369,10 @@ z-index:1000;
 html{
   scrollbar-width:auto;
   scrollbar-color:#14042a #06010c;
+}
+
+body {
+  background: #0b0f19;
 }
 
 </style>

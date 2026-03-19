@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "movies": "Películas",
+    "upcoming": "Estrenos",
+    "favorites": "Favoritos"
+  },
+  "header": {
+    "searchPlaceholder": "Buscar una película"
+  },
+  "footer": {
+    "tmdbAttribution": "Datos de películas proporcionados por TMDB"
+  },
+  "home": {
+    "title": "Descubrí la mejor experiencia de cine"
+  },
+  "movies": {
+    "noDescription": "Sin descripción disponible.",
+    "viewDetails": "Ver detalles"
+  },
+  "common": {
+    "searchingMovies": "Buscando películas...",
+    "errorTitle": "No pudimos cargar las películas.",
+    "errorMessage": "Intentá nuevamente en unos segundos.",
+    "emptyResultsTitle": "No encontramos películas",
+    "emptyResultsLine1": "Los filtros actuales no devolvieron resultados.",
+    "emptyResultsLine2": "Prueba ampliarlos o reiniciarlos.",
+    "showMore" : "Mostrar más"
+  },
+  "filters": {
+    "header": {
+      "customizePanels": "Personalizar paneles",
+      "saveOrder": "Guardar orden"
+    },
+    "panels": {
+      "list": "Listado",
+      "filters": "Filtros",
+      "genres": "Géneros",
+      "sort": "Ordenar"
+    },
+    "typesOptions": {
+      "discover": "Descubrir",
+      "popular": "Populares",
+      "now_playing": "En cartelera",
+      "upcoming": "Próximamente",
+      "top_rated": "Mejor valoradas"
+    },
+    "search": "Buscar",
+    "searchPlaceholder": "Escribí mínimo 3 caracteres",
+    "from": "Desde",
+    "to": "Hasta",
+    "years": "Años",
+    "rating": "Calificación",
+    "sortBy": "Ordenar",
+    "sortOptions": {
+      "none": "Sin ordenar",
+      "mostPopular": "Más populares",
+      "mostRecent": "Más recientes",
+      "oldest": "Más antiguos",
+      "bestRating": "Mejor rating"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-/*
+/**
  * ======================================
  * Punto de entrada de la aplicación
  * ======================================
@@ -21,7 +21,7 @@ import { createApp } from "vue";
 // Componente raíz de la aplicación
 import App from "./App.vue";
 // Importamos el router configurado (rutas y navegación)
-import router from "./router";
+import router from "./core/router";
 // Importamos Pinia para manejo de estado global
 import { createPinia } from "pinia";
 // Plugin para persistir el estado (ej: favoritos) en localStorage
@@ -31,7 +31,7 @@ import { VueQueryPlugin } from "@tanstack/vue-query";
 // Importamos tailwind
 import "./assets/main.css";
 // Importamos la librería de internacionalización (vue-i18n)
-import i18n from "./i18n";
+import i18n from "./core/i18n";
 // Importamos libreria de animaciones
 import { MotionPlugin } from "@vueuse/motion";
 
